@@ -20,7 +20,8 @@ export const SwapInput: React.FC<Props> = props => {
   return (
     <>
       <div className="swap-input">
-        <div className="swap-input__label">{type === 'from' ? 'You pay' : 'You receive'}</div>
+        <div className="swap-input__label">
+          {type === 'from' ? <PayLabel /> : 'You receive'}</div>
         <div className="swap-input__ipt-wrapper">
           <div className="swap-amount-ipt-wrapper">
             {type === 'from' ? <input placeholder="0" /> : <span>0</span>}
@@ -32,5 +33,11 @@ export const SwapInput: React.FC<Props> = props => {
 
       <TokenListModal open={open} onClose={toggleTokenListModal} />
     </>
+  )
+}
+
+const PayLabel: React.FC = () => {
+  return (
+    <span className="p-lbl">You pay <small>(Max: 12.22 AAT)</small></span>
   )
 }

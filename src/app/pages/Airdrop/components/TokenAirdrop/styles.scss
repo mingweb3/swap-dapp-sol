@@ -6,11 +6,14 @@
 
 .FormRoot {
   width: 260px;
+
+  .lbl {
+    color: var(--color-white);
+  }
 }
 
 .FormField {
   display: grid;
-  margin-bottom: 10px;
 }
 
 .FormLabel {

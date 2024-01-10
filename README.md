@@ -1,10 +1,14 @@
+<img src="https://i.postimg.cc/yNvdf5mX/mswap-mingweb3.jpg" alt="mswap-mingweb3" border="0" width="100%">
 # Swap SPL Token - SOLANA - TS 
 
+- Nodejs: 18+
+- using yarn
+
 ### Install Node Modules
-`yarn install`
+`yarn install` or `npm install`
 
 ### Dev on local
-`yarn dev`
+`yarn dev` or `npm run dev`
 
 ### Build & Deploy
 

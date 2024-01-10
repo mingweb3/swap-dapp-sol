@@ -1,12 +1,17 @@
 import { Box, Flex } from '@radix-ui/themes'
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 
 import './styles.scss'
 import { ConnectWalletButton } from '../ConnectWalletButton'
 import { PATHS } from '@/constants/paths'
+import { isPathnameMatch } from '@/utils/helper'
 
 export const Header: React.FC = () => {
+  // Get Current Page for Menu
+  const location = useLocation()
+  const { pathname } = location
+  
   return (
     <Flex className="header" align="center" justify="between" p="4" gap="3">
       <Flex className="header__left-content" gap="8" align="center">
@@ -16,18 +21,18 @@ export const Header: React.FC = () => {
           </div>
         </Link>
         <ul className="header__nav-links">
-          <li>
+          <li className={`mn-item ${isPathnameMatch(pathname, PATHS.SWAP) ? 'active' : 'no'}`}>
             <Link to={PATHS.SWAP}>Swap</Link>
           </li>
-          <li>
+          <li className={`mn-item ${isPathnameMatch(pathname, PATHS.AIRDROP) ? 'active' : 'no'}`}>
             <Link to={PATHS.AIRDROP}>Airdrop</Link>
           </li>
-          <li>
-            <Link to="/">LP Pool</Link>
+          {/* <li>
+            <Link to="/not-support-yet">LP Pool</Link>
           </li>
           <li>
-            <Link to="/">Trading</Link>
-          </li>
+            <Link to="/not-support-yet">Trading</Link>
+          </li> */}
         </ul>
       </Flex>
 

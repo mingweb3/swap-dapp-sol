@@ -48,6 +48,11 @@
     font-weight: var(--font-weight-bold);
   }
 
+  .p-lbl {
+    small {
+      font-size: 11px;
+    }
+  }
   @media (min-width: 768px) {
     .swap-input__label {
       font-size: var(--font-size-4);

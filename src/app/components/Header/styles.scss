@@ -20,11 +20,19 @@
       li a {
         color: var(--color-text);
         transition: color 0.2s ease;
-        font-weight: var(--font-weight-regular);
         line-height: var(--line-height-7);
 
         &:hover {
           color: var(--color-white);
+        }
+      }
+
+      .mn-item {
+        &.active {
+          > a {
+            color: var(--color-white);
+            font-weight: bold;
+          }
         }
       }
     }
@@ -42,3 +50,5 @@
     }
   }
 }
+
+
