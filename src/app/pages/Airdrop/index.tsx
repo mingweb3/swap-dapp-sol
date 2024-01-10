@@ -4,7 +4,7 @@ import { Helmet } from 'react-helmet-async'
 import './styles.scss'
 import { TokenAirdrop } from './components/TokenAirdrop'
 import { AAT_TOKEN_MINT, BBT_TOKEN_MINT } from '@/constants/programs'
-import { Box } from '@radix-ui/themes'
+import { Box, Flex } from '@radix-ui/themes'
 
 export const AirdropPage: React.FC = () => {
   return (
@@ -18,15 +18,16 @@ export const AirdropPage: React.FC = () => {
           <h3 className="head-3 text-white">
             Airdrop token to test <span className="text-12">(devnet only)</span>
           </h3>
-          <div className="flex col gap-8">
-            <TokenAirdrop title="Get AAT" tokenMintAddress={AAT_TOKEN_MINT} />
-            <TokenAirdrop title="Get BBT" tokenMintAddress={BBT_TOKEN_MINT} />
-          </div>
-          <p>
+          <Flex className="airdrop-form__wrapper" direction={"column"} gap={"6"}>
+            <TokenAirdrop title="Get AAT" tokenMintAddress={AAT_TOKEN_MINT} tokenMintShort="DWi...73Dh"/>
+            <TokenAirdrop title="Get BBT" tokenMintAddress={BBT_TOKEN_MINT} tokenMintShort="4AG...nRQ"/>
+            <p>
             *This is a temporary page, not for the test. 
             <br/>Just for supporting to get token for testing swap func. 
             <br/>Dont test this page, please just get tokens.
           </p>
+          </Flex>
+          
         </div>
       </Box>
     </>

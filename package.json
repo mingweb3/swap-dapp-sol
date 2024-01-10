@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "dev-local": "vite --port 3000",
+    "dev-local": "vite --port 4000",
     "build": "tsc && vite build",
     "check-types": "tsc --noEmit --pretty",
     "lint": "eslint . \"src/**/*.{js,jsx,ts,tsx}\" --report-unused-disable-directives --max-warnings 0",

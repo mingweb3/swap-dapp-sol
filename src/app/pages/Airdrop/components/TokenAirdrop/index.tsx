@@ -12,9 +12,10 @@ import './styles.scss'
 interface TokenAirdropProps {
   title: string
   tokenMintAddress: Web3.PublicKey
+  tokenMintShort: string
 }
 
-export const TokenAirdrop: React.FC<TokenAirdropProps> = ({title, tokenMintAddress}) => {
+export const TokenAirdrop: React.FC<TokenAirdropProps> = ({ title, tokenMintAddress, tokenMintShort }) => {
   // Connect & Wallet
   const { connection } = useConnection()
   const { publicKey, sendTransaction } = useWallet()
@@ -96,10 +97,10 @@ export const TokenAirdrop: React.FC<TokenAirdropProps> = ({title, tokenMintAddre
   }
 
   return (
-    <Flex className="token-airdrop_block" gap={'3'}>
+    <Flex className="token-airdrop_block" direction={'column'}>
       <Form.Root className="FormRoot" onSubmit={handleAATSubmit}>
         <Form.Field className="FormField" name="tokenAmount">
-          <Text size="4">
+          <Text size="4" className="lbl">
             {title} <Text size="1">(Limit 1 - 100)</Text>
           </Text>
           <div className="flex gap-6">
@@ -119,6 +120,9 @@ export const TokenAirdrop: React.FC<TokenAirdropProps> = ({title, tokenMintAddre
           </div>
         </Form.Field>
       </Form.Root>
+      <div>
+        <Text size="1">Address: {tokenMintShort}</Text>
+      </div>
     </Flex>
   )
 }
