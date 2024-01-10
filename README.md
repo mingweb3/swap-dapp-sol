@@ -1,3 +1,15 @@
+# Swap SPL Token - SOLANA - TS 
+
+### Install Node Modules
+`yarn install`
+
+### Dev on local
+`yarn dev`
+
+### Build & Deploy
+
+----
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.

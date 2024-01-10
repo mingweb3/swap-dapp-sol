@@ -18,3 +18,27 @@ ul {
 a {
   text-decoration: none;
 }
+
+.flex {
+  display: flex;
+  flex-direction: row;
+}
+
+.flex.col {
+  flex-direction: column;
+}
+
+.gap-4 {
+  gap: 4px; 
+}
+
+.gap-6 {
+  gap: 6px; 
+}
+
+.gap-8 {
+  gap: 8px; 
+}
+.gap-12 {
+  gap: 12px; 
+}

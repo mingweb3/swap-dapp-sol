@@ -7,12 +7,18 @@
   padding: var(--space-5) var(--space-4);
   gap: var(--space-5);
 
+
+  .swap-shadow__wrapper {
+    width: 100%;
+    max-width: 460px;
+    position: relative;
+  }
+
   .swap-wrapper {
     width: 100%;
-    max-width: 448px;
     border-radius: var(--radius-4);
     background: var(--color-box);
-    position: relative;
+
     z-index: 1;
   }
 
@@ -61,7 +67,7 @@
       border-color: var(--color-text);
     }
 
-    > svg {
+    >svg {
       width: 18px;
       height: 18px;
       color: var(--color-text);
@@ -70,8 +76,11 @@
 
   @media (min-width: 768px) {
     .swap-wrapper {
-      background: rgba(1, 0, 15, 0.5);
+      background: rgb(0 0 0 / 30%);
       backdrop-filter: blur(3px);
+    }
+
+    .swap-shadow__wrapper {
       &::before {
         content: '';
         width: 248px;

@@ -18,24 +18,13 @@
   }
 
   .token-item__info-wrapper {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
     flex: 1;
-  }
-
-  .token-item__info {
-    display: flex;
-    align-items: center;
     justify-content: space-between;
+    align-items: start;
     width: 100%;
   }
 
   .token-item__summary-info {
-    display: flex;
-    align-items: center;
-    gap: var(--space-3);
-
     .token-item__token-symbol {
       color: var(--color-white);
       font-size: var(--font-size-4);
@@ -60,8 +49,9 @@
 
   .token-item__price-info {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: var(--space-5);
+    gap: 0;
 
     .token-item__current-price,
     .token-item__percent-change {
@@ -74,6 +64,12 @@
       &--up {
         color: var(--color-green);
       }
+    }
+
+    @media (min-width: 420px) {
+      flex-direction: row;
+      align-items: center;
+      gap: var(--space-5);
     }
   }
 
