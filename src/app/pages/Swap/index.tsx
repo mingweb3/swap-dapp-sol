@@ -8,9 +8,9 @@ import { SwitchIcon } from '@/components/Svg/Switch'
 import { SwapInput } from './components/SwapInput'
 import { EstimatedFee } from './components/EstimatedFee'
 import { SwapButton } from './components/SwapButton'
+import { SwapPairInfo } from './components/SwapPairInfo'
 
 import './styles.scss'
-import { SwapPairInfo } from './components/SwapPairInfo'
 
 export const SwapPage: React.FC = () => {
   return (
