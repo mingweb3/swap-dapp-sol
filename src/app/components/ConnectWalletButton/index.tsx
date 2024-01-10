@@ -1,8 +1,21 @@
 import React from 'react'
+import { WalletMultiButton } from '@solana/wallet-adapter-react-ui'
+import { useWallet } from '@solana/wallet-adapter-react'
 
 import './styles.scss'
-import { Button } from '../UI/Button'
 
 export const ConnectWalletButton: React.FC = () => {
-  return <Button className="connect-wallet-button" title="Connect Wallet" />
+  const { publicKey } = useWallet()
+
+  return (
+    <div>
+      {!publicKey ? (
+        <WalletMultiButton>Connect Wallet</WalletMultiButton>
+      ) : (
+        <div className="wallet-connected-wrapper">
+          <WalletMultiButton />
+        </div>
+      )}
+    </div>
+  )
 }
