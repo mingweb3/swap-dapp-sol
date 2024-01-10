@@ -22,10 +22,10 @@ export const HomePage: React.FC = () => {
       </Helmet>
       <div className="home-page__container">
         <div className="home-page__inner">
-          <div className="home-page__logo-wrapper">
+          <div className="home-page__logo-wrapper fadeInUp">
             <img src="/images/logo/logo.png" alt="logo.png" />
           </div>
-          <div>
+          <div className="fadeInUp">
             <Button title="Launch App" onClick={onLaunchApp} />
           </div>
         </div>

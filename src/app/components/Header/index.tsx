@@ -20,10 +20,10 @@ export const Header: React.FC = () => {
             <Link to={PATHS.SWAP}>Swap</Link>
           </li>
           <li>
-            <Link to="/">Token</Link>
+            <Link to="/">Airdrop</Link>
           </li>
           <li>
-            <Link to="/">Pool</Link>
+            <Link to="/">LP Pool</Link>
           </li>
           <li>
             <Link to="/">Trading</Link>
