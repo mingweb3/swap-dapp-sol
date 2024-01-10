@@ -1,4 +1,4 @@
-<img src="https://i.ibb.co/bBDw6xH/mswap-mingweb3.jpg" alt="mswap-mingweb3" border="0" width="100%">
+<img src="https://i.postimg.cc/yNvdf5mX/mswap-mingweb3.jpg" alt="mswap-mingweb3" border="0" width="100%">
 # Swap SPL Token - SOLANA - TS 
 
 - Nodejs: 18+
