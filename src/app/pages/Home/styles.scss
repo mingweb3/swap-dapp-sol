@@ -16,7 +16,11 @@
 
   .home-page__logo-wrapper {
     width: 200px;
-
+    text-align: center;
+    span {
+      font-size: 11px;
+      color: var(--color-text);
+    }
     >img {
       width: 100%;
       height: 100%;

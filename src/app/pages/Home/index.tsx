@@ -24,6 +24,7 @@ export const HomePage: React.FC = () => {
         <div className="home-page__inner">
           <div className="home-page__logo-wrapper fadeInUp">
             <img src="/images/logo/logo.png" alt="logo.png" />
+            <span>A product of mingweb3</span>
           </div>
           <div className="fadeInUp">
             <Button title="Launch App" onClick={onLaunchApp} />

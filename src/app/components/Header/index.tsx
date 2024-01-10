@@ -20,7 +20,7 @@ export const Header: React.FC = () => {
             <Link to={PATHS.SWAP}>Swap</Link>
           </li>
           <li>
-            <Link to="/">Airdrop</Link>
+            <Link to={PATHS.AIRDROP}>Airdrop</Link>
           </li>
           <li>
             <Link to="/">LP Pool</Link>

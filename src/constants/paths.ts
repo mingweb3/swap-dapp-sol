@@ -1,4 +1,5 @@
 export const PATHS = {
   HOME: '/',
-  SWAP: '/swap'
+  SWAP: '/swap',
+  AIRDROP: '/airdrop'
 }
