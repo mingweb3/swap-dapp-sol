@@ -23,8 +23,9 @@ export const AirdropPage: React.FC = () => {
             <TokenAirdrop title="Get BBT" tokenMintAddress={BBT_TOKEN_MINT} />
           </div>
           <p>
-            *This is a temporary page not for the test. Just help to get token for testing. Dont test this page, just
-            get token.
+            *This is a temporary page, not for the test. 
+            <br/>Just for supporting to get token for testing swap func. 
+            <br/>Dont test this page, please just get tokens.
           </p>
         </div>
       </Box>
