@@ -1,0 +1,19 @@
+.root-layout__container {
+  width: 100%;
+  height: 100%;
+
+  .root-layout__wrapper {
+    max-width: 1170px;
+    margin: 0 auto;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .root-layout__main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+}

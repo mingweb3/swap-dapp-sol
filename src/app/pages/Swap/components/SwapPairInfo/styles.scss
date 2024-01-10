@@ -1,0 +1,14 @@
+.swap-pair-info {
+  display: flex;
+  width: 100%;
+  max-width: 448px;
+  flex-direction: column;
+  gap: var(--space-5);
+
+  .token-list-item {
+    cursor: auto;
+    &:hover {
+      background: transparent;
+    }
+  }
+}

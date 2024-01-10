@@ -1,0 +1,11 @@
+.swap-wrapper__estimated-fee {
+  span {
+    font-size: var(--font-size-1);
+    color: var(--color-text);
+  }
+  @media (min-width: 768px) {
+    span {
+      font-size: var(--font-size-4);
+    }
+  }
+}
