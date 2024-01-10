@@ -6,10 +6,15 @@ import * as Web3 from '@solana/web3.js'
 import * as token from '@solana/spl-token'
 import { useConnection, useWallet } from '@solana/wallet-adapter-react'
 import AirdropSchema from '@/models/airdrop'
+import { AIRDROP_PDA, AIRDROP_PROGRAM_ID } from '@/constants/programs'
 import './styles.scss'
-import { AAT_TOKEN_MINT, AIRDROP_PDA, AIRDROP_PROGRAM_ID } from '@/constants/programs'
 
-export const TokenAirdrop: React.FC = () => {
+interface TokenAirdropProps {
+  title: string
+  tokenMintAddress: Web3.PublicKey
+}
+
+export const TokenAirdrop: React.FC<TokenAirdropProps> = ({title, tokenMintAddress}) => {
   // Connect & Wallet
   const { connection } = useConnection()
   const { publicKey, sendTransaction } = useWallet()
@@ -31,7 +36,7 @@ export const TokenAirdrop: React.FC = () => {
     }
     const transaction = new Web3.Transaction()
 
-    const userATA = await token.getAssociatedTokenAddress(AAT_TOKEN_MINT, publicKey)
+    const userATA = await token.getAssociatedTokenAddress(tokenMintAddress, publicKey)
     const account = await connection.getAccountInfo(userATA)
 
     if (account == null) {
@@ -39,7 +44,7 @@ export const TokenAirdrop: React.FC = () => {
         publicKey,
         userATA,
         publicKey,
-        AAT_TOKEN_MINT
+        tokenMintAddress
       )
       transaction.add(createATAIX)
     }
@@ -59,7 +64,7 @@ export const TokenAirdrop: React.FC = () => {
           isWritable: true
         },
         {
-          pubkey: AAT_TOKEN_MINT,
+          pubkey: tokenMintAddress,
           isSigner: false,
           isWritable: true
         },
@@ -95,7 +100,7 @@ export const TokenAirdrop: React.FC = () => {
       <Form.Root className="FormRoot" onSubmit={handleAATSubmit}>
         <Form.Field className="FormField" name="tokenAmount">
           <Text size="4">
-            Get AAT <Text size="1">(Limit 1 - 100)</Text>
+            {title} <Text size="1">(Limit 1 - 100)</Text>
           </Text>
           <div className="flex gap-6">
             <Form.Control asChild>
