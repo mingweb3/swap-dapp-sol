@@ -1,0 +1,52 @@
+.swap-input__select-token {
+  display: flex;
+  align-items: center;
+  padding: var(--space-2);
+  gap: var(--space-2);
+  border-radius: var(--radius-4);
+  background: var(--color-dark-blue-2);
+  height: 39px;
+  cursor: pointer;
+  user-select: none;
+  border: 1px solid transparent;
+  transition: all 0.2s ease;
+
+  &:hover {
+    border-color: var(--color-text);
+  }
+
+  .select-token__token-logo {
+    width: 18px;
+    height: 18px;
+  }
+
+  .select-token__token-name {
+    color: var(--color-white);
+    font-size: var(--font-size-2);
+    font-weight: var(--font-weight-bold);
+  }
+
+  .select-token__dropdown {
+    width: var(--space-4);
+    height: 23px;
+    margin-top: -1px;
+  }
+
+  @media (min-width: 768px) {
+    height: 44px;
+
+    .select-token__token-logo {
+      width: 28px;
+      height: 28px;
+    }
+
+    .select-token__token-name {
+      font-size: var(--font-size-4);
+      line-height: var(--font-size-4);
+    }
+
+    .select-token__dropdown {
+      margin-top: 0px;
+    }
+  }
+}

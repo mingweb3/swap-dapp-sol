@@ -1,0 +1,84 @@
+.token-list-item {
+  padding: var(--space-2);
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: rgba(132, 143, 171, 0.1);
+  }
+
+  .token-item__inner {
+    display: flex;
+    gap: var(--space-2);
+  }
+
+  .token-item__logo {
+    width: 28px;
+    height: 28px;
+  }
+
+  .token-item__info-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    flex: 1;
+  }
+
+  .token-item__info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .token-item__summary-info {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+
+    .token-item__token-symbol {
+      color: var(--color-white);
+      font-size: var(--font-size-4);
+      font-weight: var(--font-weight-bold);
+    }
+
+    .token-item__token-addr {
+      padding: var(--space-1) 10px;
+      border-radius: var(--radius-2);
+      background: var(--color-box);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .token-item__token-addr span {
+      color: var(--color-white);
+      font-size: var(--font-size-1);
+      font-weight: var(--font-weight-bold);
+    }
+  }
+
+  .token-item__price-info {
+    display: flex;
+    align-items: center;
+    gap: var(--space-5);
+
+    .token-item__current-price,
+    .token-item__percent-change {
+      color: var(--color-white);
+      font-size: var(--font-size-3);
+      font-weight: var(--font-weight-bold);
+    }
+
+    .token-item__percent-change {
+      &--up {
+        color: var(--color-green);
+      }
+    }
+  }
+
+  .token-item__full-name {
+    color: var(--color-text);
+    font-size: var(--font-size-2);
+  }
+}

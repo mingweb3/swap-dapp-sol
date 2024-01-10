@@ -1,21 +1,37 @@
 import * as React from 'react'
-import { Helmet } from 'react-helmet-async'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
-
-import { AppConfig } from '@/constants/appConfig'
+import { createBrowserRouter, Outlet, RouterProvider } from 'react-router-dom'
 
 import { HomePage } from './pages/Home/Loadable'
+import { ErrorPage } from './pages/Error/Loadable'
+import { SwapPage } from './pages/Swap/Loadable'
+
+import { PATHS } from '@/constants/paths'
+import { RootLayout } from './components/RootLayout'
+
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <Outlet />,
+    errorElement: <ErrorPage />,
+    children: [
+      {
+        path: PATHS.HOME,
+        element: <HomePage />
+      },
+      {
+        path: PATHS.SWAP,
+        element: <RootLayout />,
+        children: [
+          {
+            path: '',
+            element: <SwapPage />
+          }
+        ]
+      }
+    ]
+  }
+])
 
 export const App: React.FC = () => {
-  return (
-    <BrowserRouter>
-      <Helmet titleTemplate={AppConfig.title} defaultTitle={AppConfig.title}>
-        <meta name="description" content={AppConfig.description} />
-      </Helmet>
-
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-      </Routes>
-    </BrowserRouter>
-  )
+  return <RouterProvider router={router} />
 }
