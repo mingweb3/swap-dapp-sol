@@ -11,7 +11,7 @@
 4. Swap function will work with AAT & BBT token actually
 5. Please claim AAT token and BBT token to your wallet by clicking on airdrop page and get them (devnet - sol). No airdrop program just using a demo program (reason: save time and focus on frontend side)
 6. Then swap AAT <-> BBT in SWAP page (SPL)
-
+7. This project is a demo i've built in 4 full working days. so there are some missing points. It can not be a final product. there are a lot functions / features in my mind that i want to build if it's real world. please focus on the demo only. 
 ----
 ### Now! Let go.
 
