@@ -10,7 +10,7 @@
 3. I use some api from Jupiter to polish the UI/UX. I copied some ideas on Jupiter and Uniswap...
 4. Swap function will work with AAT & BBT token actually
 5. Please claim AAT token and BBT token to your wallet by clicking on airdrop page and get them (devnet - sol). No airdrop program just using a demo program (reason: save time and focus on frontend side)
-6. Then swap AAT <-> BBT in SWAP page (SPL). Recommend wallet: Solfare / Phantom.
+6. Then swap AAT <-> BBT in SWAP page (SPL). Recommend wallet: Solflare / Phantom.
 7. Missing in Package: Unit Jest / Auto deployment / Config Testnet, Mainnet Beta.
 8. This project is a demo i've built in 4 full working days (+1 day to test and record video. total is 5days). So there are some missing points. It can not be a final product. there are a lot functions / features in my mind that i want to build if it's real world. please focus on the demo only.
 
