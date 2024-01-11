@@ -1,0 +1,5 @@
+export const EnvConfig = {
+  SOLSCAN_EXPLORE_URL: import.meta.env.VITE_SOLSCAN_EXPLORE_URL,
+  JUP_STRICT_LIST_URL: import.meta.env.VITE_JUP_STRICT_LIST_URL,
+  COINGECKO_V3_API_URL: import.meta.env.VITE_COINGECKO_V3_API_URL
+}

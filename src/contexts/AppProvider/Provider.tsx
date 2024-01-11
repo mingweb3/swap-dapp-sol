@@ -1,19 +1,90 @@
-import React from 'react'
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { DEFAULT_FROM_DATA, DEFAULT_TO_DATA, SECONDS_TO_REFRESH } from '@/constants'
+import { useFetchTokenList } from '@/hooks/useFetchTokenList'
+import { useFetchTokenPrice } from '@/hooks/useFetchTokenPrice'
+import { TokenData, TokenPrice } from '@/types'
+import { TokenInfo } from '@solana/spl-token-registry'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 
 type AppProviderProps = { children: React.ReactNode }
 
-type AppContextProps = undefined
-
-export type ValidateProductError = {
-  message: string
-  name: string
-  product_id: number
+type AppContextProps = {
+  tokenList: TokenInfo[]
+  fromData: TokenData | null
+  setFromData: React.Dispatch<React.SetStateAction<TokenData | null>>
+  toData: TokenData | null
+  setToData: React.Dispatch<React.SetStateAction<TokenData | null>>
+  tokenPrice: TokenPrice | null
+  fetchTokenPrice: () => void
 }
 
 const AppContext = React.createContext<AppContextProps | undefined>(undefined)
 
 const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
-  return <AppContext.Provider value={undefined}>{children}</AppContext.Provider>
+  const { tokenList } = useFetchTokenList()
+  const { fetchTokenPrice } = useFetchTokenPrice()
+
+  const [fromData, setFromData] = useState<TokenData | null>(null)
+  const [toData, setToData] = useState<TokenData | null>(null)
+  const [refreshTimer, setRefreshTimer] = useState<number>(0)
+  const [tokenPrice, setTokenPrice] = useState<TokenPrice | null>(null)
+  const refreshTimerRef = useRef<any>(null)
+
+  useEffect((): void => {
+    if (tokenList?.length) {
+      setFromData(DEFAULT_FROM_DATA)
+      setToData(DEFAULT_TO_DATA)
+    }
+  }, [tokenList])
+
+  const _fetchTokenPrice = useCallback((): void => {
+    if (fromData && toData) {
+      fetchTokenPrice([
+        fromData.tokenInfo.extensions?.coingeckoId as string,
+        toData.tokenInfo.extensions?.coingeckoId as string
+      ]).then(res => {
+        setTokenPrice(res)
+        setRefreshTimer(SECONDS_TO_REFRESH)
+      })
+    }
+  }, [fromData, toData, fetchTokenPrice])
+
+  /**
+   * A timer management component that counts down from a specified time.
+   *
+   * @param {number} timer - The current timer value.
+   * @param {React.MutableRefObject<any>} refreshTimerRef - A mutable ref to manage the timer interval.
+   */
+  useEffect((): (() => void) => {
+    if (refreshTimer === 0) {
+      _fetchTokenPrice()
+      clearInterval(refreshTimerRef.current)
+    } else {
+      refreshTimerRef.current = setInterval(() => {
+        setRefreshTimer((refreshTimer as number) - 1)
+      }, 1000)
+    }
+
+    return () => {
+      clearInterval(refreshTimerRef.current)
+    }
+  }, [refreshTimer, _fetchTokenPrice])
+
+  return (
+    <AppContext.Provider
+      value={{
+        tokenList,
+        fromData,
+        setFromData,
+        toData,
+        setToData,
+        tokenPrice,
+        fetchTokenPrice: _fetchTokenPrice
+      }}
+    >
+      {children}
+    </AppContext.Provider>
+  )
 }
 
 export { AppProvider, AppContext }

@@ -1,12 +1,14 @@
 import { Box, Flex } from '@radix-ui/themes'
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 
-import './styles.scss'
 import { ConnectWalletButton } from '../ConnectWalletButton'
 import { PATHS } from '@/constants/paths'
 
+import './styles.scss'
+
 export const Header: React.FC = () => {
+  const location = useLocation()
   return (
     <Flex className="header" align="center" justify="between" p="4" gap="3">
       <Flex className="header__left-content" gap="8" align="center">
@@ -17,7 +19,9 @@ export const Header: React.FC = () => {
         </Link>
         <ul className="header__nav-links">
           <li>
-            <Link to={PATHS.SWAP}>Swap</Link>
+            <Link className={location.pathname === PATHS.SWAP ? 'active' : ''} to={PATHS.SWAP}>
+              Swap
+            </Link>
           </li>
           <li>
             <Link to="/">Token</Link>

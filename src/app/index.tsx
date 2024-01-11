@@ -25,6 +25,10 @@ const router = createBrowserRouter([
           {
             path: '',
             element: <SwapPage />
+          },
+          {
+            path: '*',
+            element: <SwapPage />
           }
         ]
       }

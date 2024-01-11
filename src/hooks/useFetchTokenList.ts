@@ -1,20 +1,21 @@
 import { useEffect, useState } from 'react'
-import { TokenListProvider, TokenInfo, ENV } from '@solana/spl-token-registry'
+import { TokenInfo } from '@solana/spl-token-registry'
+import { EnvConfig } from '@/constants/envConfig'
 
-export const useFetchTokenList = () => {
-  const [tokenMap, setTokenMap] = useState<Map<string, TokenInfo>>(new Map())
+export const useFetchTokenList = (): {
+  tokenList: TokenInfo[]
+} => {
+  const [tokenList, setTokenList] = useState<TokenInfo[]>([])
 
-  useEffect(() => {
-    new TokenListProvider().resolve().then(tokens => {
-      const tokenList = tokens.filterByChainId(ENV.Devnet).getList()
-      setTokenMap(
-        tokenList.reduce((map, item) => {
-          map.set(item.address, item)
-          return map
-        }, new Map())
-      )
-    })
+  useEffect((): void => {
+    const fetchTokenList = async (): Promise<void> => {
+      const res = await fetch(EnvConfig.JUP_STRICT_LIST_URL)
+      const list = await res.json()
+      setTokenList(list)
+    }
+
+    fetchTokenList()
   }, [])
 
-  return { tokenList: tokenMap }
+  return { tokenList }
 }

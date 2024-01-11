@@ -6,6 +6,7 @@ import { ConnectionProvider } from '@solana/wallet-adapter-react'
 import * as web3 from '@solana/web3.js'
 
 import { ClientWalletProvider } from './contexts/ClientWalletProvider'
+import { AppProvider } from './contexts/AppProvider'
 
 import { App } from './app'
 
@@ -19,7 +20,9 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
       <Theme id="radix-root">
         <ConnectionProvider endpoint={web3.clusterApiUrl('devnet')}>
           <ClientWalletProvider autoConnect>
-            <App />
+            <AppProvider>
+              <App />
+            </AppProvider>
           </ClientWalletProvider>
         </ConnectionProvider>
       </Theme>
