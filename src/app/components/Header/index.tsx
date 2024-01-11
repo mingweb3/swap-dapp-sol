@@ -11,7 +11,7 @@ export const Header: React.FC = () => {
   // Get Current Page for Menu
   const location = useLocation()
   const { pathname } = location
-  
+
   return (
     <Flex className="header" align="center" justify="between" p="4" gap="3">
       <Flex className="header__left-content" gap="8" align="center">
