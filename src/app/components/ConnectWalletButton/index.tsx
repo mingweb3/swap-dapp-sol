@@ -10,7 +10,9 @@ export const ConnectWalletButton: React.FC = () => {
   return (
     <div>
       {!publicKey ? (
-        <WalletMultiButton>Connect Wallet</WalletMultiButton>
+        <WalletMultiButton>
+          <span>Connect Wallet</span>
+        </WalletMultiButton>
       ) : (
         <div className="wallet-connected-wrapper">
           <WalletMultiButton />

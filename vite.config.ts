@@ -23,9 +23,10 @@ export default defineConfig(({ command  }) => {
           "@/state": path.resolve(__dirname, "./src/state"),
           "@/types": path.resolve(__dirname, "./src/types"),
           "@/models": path.resolve(__dirname, "./src/models"),
+          "@/libs": path.resolve(__dirname, "./src/libs"),
           "@/public/*": path.resolve(__dirname, "./public/*"),
         },
-      }
+      },
     }
   } else {
   // When Build and deploy
@@ -42,6 +43,7 @@ export default defineConfig(({ command  }) => {
           "@/state": path.resolve(__dirname, "./src/state"),
           "@/types": path.resolve(__dirname, "./src/types"),
           "@/models": path.resolve(__dirname, "./src/models"),
+          "@/libs/*": path.resolve(__dirname, "./src/libs"),
           "@/public/*": path.resolve(__dirname, "./public/*"),
           crypto: 'crypto-browserify',
         },
@@ -66,7 +68,7 @@ export default defineConfig(({ command  }) => {
         rollupOptions: {
           plugins: [
             rollupNodePolyFill()
-          ]
+          ],
         }
       }
     }

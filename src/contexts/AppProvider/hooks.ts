@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react'
 import { AppContext } from './Provider'
 import { TokenInfo } from '@solana/spl-token-registry'
-import { SwapInputType, TokenData, TokenPrice } from '@/types'
+import { SplToken, SwapInputType, TokenData, TokenPrice } from '@/types'
 
 export const useAppState = () => {
   const context = React.useContext(AppContext)
@@ -74,4 +74,11 @@ export const useTokenPrice = (): {
   const toKey = toData?.tokenInfo?.extensions?.coingeckoId as string
 
   return { from: tokenPrice?.[fromKey], to: tokenPrice?.[toKey], fetchTokenPrice }
+}
+
+export const useSplTokenData = (): {
+  splTokenData: SplToken[]
+} => {
+  const { splTokenData } = useAppState()
+  return { splTokenData }
 }

@@ -1,37 +1,36 @@
 import { TokenData } from '@/types'
+import { AAT_TOKEN_MINT, BBT_TOKEN_MINT } from './programs'
 
 export const SECONDS_TO_REFRESH = 60
 
 export const DEFAULT_FROM_DATA: TokenData = {
   tokenInfo: {
-    address: 'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v',
+    address: AAT_TOKEN_MINT.toString(),
     chainId: 101,
-    decimals: 6,
+    decimals: 9,
     extensions: {
-      coingeckoId: 'usd-coin'
+      coingeckoId: 'aat-coin'
     },
-    logoURI:
-      'https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v/logo.png',
-    name: 'USD Coin',
-    symbol: 'USDC',
-    tags: ['old-registry', 'solana-fm']
+    logoURI: '/images/tokens/aat.png',
+    name: 'AAT Coin',
+    symbol: 'AAT',
+    tags: ['test']
   },
   amount: 0
 }
 
 export const DEFAULT_TO_DATA: TokenData = {
   tokenInfo: {
-    address: 'So11111111111111111111111111111111111111112',
+    address: BBT_TOKEN_MINT.toString(),
     chainId: 101,
     decimals: 9,
     extensions: {
-      coingeckoId: 'wrapped-solana'
+      coingeckoId: 'bbt-coin'
     },
-    logoURI:
-      'https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/So11111111111111111111111111111111111111112/logo.png',
-    name: 'Wrapped SOL',
-    symbol: 'SOL',
-    tags: ['old-registry']
+    logoURI: '/images/tokens/bbt.png',
+    name: 'BBT Coin',
+    symbol: 'BBT',
+    tags: ['test']
   },
   amount: 0
 }

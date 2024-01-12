@@ -3,8 +3,10 @@ import { DEFAULT_FROM_DATA, DEFAULT_TO_DATA, SECONDS_TO_REFRESH } from '@/consta
 import { PATHS } from '@/constants/paths'
 import { useFetchTokenList } from '@/hooks/useFetchTokenList'
 import { useFetchTokenPrice } from '@/hooks/useFetchTokenPrice'
-import { TokenData, TokenPrice } from '@/types'
+import { SplToken, TokenData, TokenPrice } from '@/types'
+import { getSPLTokenData } from '@/utils/helper.solWeb3'
 import { TokenInfo } from '@solana/spl-token-registry'
+import { useConnection, useWallet } from '@solana/wallet-adapter-react'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 
@@ -17,6 +19,7 @@ type AppContextProps = {
   toData: TokenData | null
   setToData: React.Dispatch<React.SetStateAction<TokenData | null>>
   tokenPrice: TokenPrice | null
+  splTokenData: SplToken[]
   fetchTokenPrice: () => void
 }
 
@@ -25,6 +28,8 @@ const AppContext = React.createContext<AppContextProps | undefined>(undefined)
 const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
   const location = useLocation()
   const navigate = useNavigate()
+  const wallet = useWallet()
+  const { connection } = useConnection()
   const { tokenList } = useFetchTokenList()
   const { fetchTokenPrice } = useFetchTokenPrice()
 
@@ -32,7 +37,19 @@ const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
   const [toData, setToData] = useState<TokenData | null>(null)
   const [tokenPrice, setTokenPrice] = useState<TokenPrice | null>(null)
   const [refreshTimer, setRefreshTimer] = useState<number>(0)
+  const [splTokenData, setSplTokenData] = useState<SplToken[]>([])
   const refreshTimerRef = useRef<any>(null)
+
+  useEffect((): void => {
+    if (wallet.connected) {
+      getSPLTokenData(wallet, connection).then((tokenList: SplToken[]) => {
+        if (tokenList) {
+          setSplTokenData(() => tokenList.filter(t => t !== undefined))
+        }
+      })
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [wallet.connected])
 
   useEffect((): void => {
     const currentPath = `${PATHS.SWAP}/${fromData?.tokenInfo?.symbol}-${toData?.tokenInfo?.symbol}`
@@ -106,6 +123,7 @@ const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
         toData,
         setToData,
         tokenPrice,
+        splTokenData,
         fetchTokenPrice: _fetchTokenPrice
       }}
     >

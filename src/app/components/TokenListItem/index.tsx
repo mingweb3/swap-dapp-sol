@@ -27,7 +27,7 @@ export const TokenListItem: React.FC<Props> = props => {
                 <div className="token-item__token-symbol">{symbol}</div>
                 <a href={`${EnvConfig.SOLSCAN_EXPLORE_URL}token/${address}?cluster=devnet`} target="_blank">
                   <div className="token-item__token-addr">
-                    <span>{truncateString(address, 10)}</span>
+                    <span>{truncateString(address, 11)}</span>
                     <img src="/images/icons/arrow-top-right.svg" alt="arrow-top-right.svg" />
                   </div>
                 </a>
