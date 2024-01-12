@@ -1,0 +1,10 @@
+.page-not-found {
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+
+  .ttl {
+    font-size: var(--font-size-8);
+    color:  var(--color-white);
+  }
+}

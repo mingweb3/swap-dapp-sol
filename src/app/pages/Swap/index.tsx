@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useCallback } from 'react'
+import React, { ChangeEvent, useCallback, useState } from 'react'
 import { Helmet } from 'react-helmet-async'
 
 import { Box } from '@radix-ui/themes'
@@ -14,24 +14,43 @@ import './styles.scss'
 import { useSwapPairInfo, useTokenPrice } from '@/contexts/AppProvider/hooks'
 import { SwapInputType } from '@/types'
 import { TokenInfo } from '@solana/spl-token-registry'
+import { TokenListModal } from './components/TokenListModal'
 
 export const SwapPage: React.FC = () => {
-  const { fromData, toData, updatePairInfo } = useSwapPairInfo()
-  const { fetchTokenPrice } = useTokenPrice()
+  const { fromData, toData, updatePairInfo, switchFromAndTo } = useSwapPairInfo()
+  const { from: fromTokenPrice, to: toTokenPrice, fetchTokenPrice } = useTokenPrice()
+
+  const [openTokenListModal, setOpenTokenListModal] = useState<boolean>(false)
+  const [selectType, setSelectType] = useState<SwapInputType | null>(null)
+
+  const toggleTokenListModal = useCallback((type: typeof selectType): void => {
+    setSelectType(type)
+    setOpenTokenListModal(prev => !prev)
+  }, [])
 
   const onAmountChange = useCallback(
     (type: SwapInputType, e: ChangeEvent<HTMLInputElement>): void => {
-      updatePairInfo(type, { amount: +e.target.value })
+      const amount = e.target.value.replace(/[^0-9.]/g, '')
+      updatePairInfo(type, { amount: +amount })
     },
     [updatePairInfo]
   )
 
   const onTokenChange = useCallback(
     (type: SwapInputType, tokenInfo: TokenInfo): void => {
+      if (
+        (type === 'from' && tokenInfo.address === toData?.tokenInfo.address) ||
+        (type === 'to' && tokenInfo.address === fromData?.tokenInfo.address)
+      ) {
+        switchFromAndTo()
+        return
+      }
       updatePairInfo(type, { tokenInfo })
-      setTimeout(fetchTokenPrice, 500)
+      setTimeout(() => {
+        fetchTokenPrice()
+      }, 2000)
     },
-    [updatePairInfo, fetchTokenPrice]
+    [updatePairInfo, fetchTokenPrice, switchFromAndTo, fromData, toData]
   )
 
   return (
@@ -51,17 +70,19 @@ export const SwapPage: React.FC = () => {
                 <SwapInput
                   type="from"
                   tokenData={fromData}
-                  onAmountChange={e => onAmountChange('from', e)}
-                  onTokenChange={tokenInfo => onTokenChange('from', tokenInfo)}
+                  tokenPrice={fromTokenPrice}
+                  onAmountChange={(e: ChangeEvent<HTMLInputElement>) => onAmountChange('from', e)}
+                  onOpenTokenList={toggleTokenListModal}
                 />
-                <div className="swap-wrapper__switch-btn">
+                <div className="swap-wrapper__switch-btn" onClick={switchFromAndTo}>
                   <SwitchIcon />
                 </div>
                 <SwapInput
                   type="to"
                   tokenData={toData}
-                  onAmountChange={e => onAmountChange('to', e)}
-                  onTokenChange={tokenInfo => onTokenChange('to', tokenInfo)}
+                  tokenPrice={toTokenPrice}
+                  onAmountChange={(e: ChangeEvent<HTMLInputElement>) => onAmountChange('to', e)}
+                  onOpenTokenList={toggleTokenListModal}
                 />
               </div>
               <EstimatedFee fromData={fromData} toData={toData} />
@@ -71,6 +92,15 @@ export const SwapPage: React.FC = () => {
         </Box>
         <SwapPairInfo fromData={fromData} toData={toData} />
       </div>
+
+      <TokenListModal
+        open={openTokenListModal && !!selectType}
+        onClose={() => toggleTokenListModal(null)}
+        onSelectToken={(tokenInfo: TokenInfo) => {
+          onTokenChange(selectType as SwapInputType, tokenInfo)
+          toggleTokenListModal(null)
+        }}
+      />
     </>
   )
 }
