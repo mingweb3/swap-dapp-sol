@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-types */
 import { WalletContextState } from '@solana/wallet-adapter-react'
 import { Connection, LAMPORTS_PER_SOL, PublicKey, TransactionInstruction } from '@solana/web3.js'
 import * as token from '@solana/spl-token'

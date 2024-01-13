@@ -12,7 +12,8 @@ export const useFetchTokenList = (): {
     const fetchTokenList = async (): Promise<void> => {
       const res = await fetch(EnvConfig.JUP_STRICT_LIST_URL)
       const list = await res.json()
-      setTokenList([DEFAULT_FROM_DATA.tokenInfo, DEFAULT_TO_DATA.tokenInfo, ...list])
+      // eslint-disable-next-line no-unsafe-optional-chaining
+      setTokenList([DEFAULT_FROM_DATA.tokenInfo, DEFAULT_TO_DATA.tokenInfo, ...list?.slice(0, 100)])
     }
 
     fetchTokenList()

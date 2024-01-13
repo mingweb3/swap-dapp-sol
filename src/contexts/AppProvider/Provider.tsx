@@ -1,14 +1,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { ToastBase } from '@/components/UI/Toast'
 import { DEFAULT_FROM_DATA, DEFAULT_TO_DATA, SECONDS_TO_REFRESH } from '@/constants'
 import { PATHS } from '@/constants/paths'
 import { useFetchTokenList } from '@/hooks/useFetchTokenList'
 import { useFetchTokenPrice } from '@/hooks/useFetchTokenPrice'
 import { SplToken, TokenData, TokenPrice } from '@/types'
 import { getSPLTokenData } from '@/utils/helper.solWeb3'
+import { truncateString } from '@/utils/truncateString'
 import { TokenInfo } from '@solana/spl-token-registry'
 import { useConnection, useWallet } from '@solana/wallet-adapter-react'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
 type AppProviderProps = { children: React.ReactNode }
 
@@ -21,6 +24,7 @@ type AppContextProps = {
   tokenPrice: TokenPrice | null
   splTokenData: SplToken[]
   fetchTokenPrice: () => void
+  fetchSPLTokenData: () => Promise<void>
 }
 
 const AppContext = React.createContext<AppContextProps | undefined>(undefined)
@@ -36,17 +40,21 @@ const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
   const [fromData, setFromData] = useState<TokenData | null>(null)
   const [toData, setToData] = useState<TokenData | null>(null)
   const [tokenPrice, setTokenPrice] = useState<TokenPrice | null>(null)
-  const [refreshTimer, setRefreshTimer] = useState<number>(0)
+  const [refreshTimer, setRefreshTimer] = useState<number | null>(null)
   const [splTokenData, setSplTokenData] = useState<SplToken[]>([])
   const refreshTimerRef = useRef<any>(null)
 
   useEffect((): void => {
     if (wallet.connected) {
-      getSPLTokenData(wallet, connection).then((tokenList: SplToken[]) => {
-        if (tokenList) {
-          setSplTokenData(() => tokenList.filter(t => t !== undefined))
+      toast(
+        <ToastBase title="Wallet Connected">
+          <span>Connected to wallet {truncateString(wallet.publicKey?.toString() as string, 9)}</span>
+        </ToastBase>,
+        {
+          type: 'success'
         }
-      })
+      )
+      fetchSPLTokenData()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [wallet.connected])
@@ -56,6 +64,7 @@ const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
     if (fromData && toData && location.pathname !== currentPath) {
       navigate(currentPath)
     }
+    _fetchTokenPrice()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fromData, toData])
 
@@ -80,15 +89,28 @@ const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tokenList])
 
+  const fetchSPLTokenData = useCallback(
+    (): Promise<void> =>
+      getSPLTokenData(wallet, connection).then((tokenList: SplToken[]) => {
+        if (tokenList) {
+          setSplTokenData(() => tokenList.filter(t => t !== undefined))
+        }
+      }),
+    [wallet, connection]
+  )
+
   const _fetchTokenPrice = useCallback((): void => {
     if (fromData && toData) {
       fetchTokenPrice([
         fromData.tokenInfo.extensions?.coingeckoId as string,
         toData.tokenInfo.extensions?.coingeckoId as string
-      ]).then(res => {
-        setTokenPrice(res)
-        setRefreshTimer(SECONDS_TO_REFRESH)
-      })
+      ])
+        .then(res => {
+          setTokenPrice(res)
+        })
+        .finally(() => {
+          setRefreshTimer(SECONDS_TO_REFRESH)
+        })
     }
   }, [fromData, toData, fetchTokenPrice])
 
@@ -111,7 +133,6 @@ const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
     return () => {
       clearInterval(refreshTimerRef.current)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [refreshTimer, _fetchTokenPrice])
 
   return (
@@ -124,6 +145,7 @@ const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
         setToData,
         tokenPrice,
         splTokenData,
+        fetchSPLTokenData,
         fetchTokenPrice: _fetchTokenPrice
       }}
     >

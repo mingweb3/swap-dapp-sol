@@ -17,10 +17,9 @@
     border-color: var(--color-text) !important;
   }
 
-  > span {
+  span {
     font-size: var(--font-size-3) !important;
     font-weight: 900 !important;
-    line-height: var(--font-size-3) !important;
     background: var(--color-gradient-1);
     background-clip: text;
     -webkit-background-clip: text;

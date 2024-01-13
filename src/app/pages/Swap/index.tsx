@@ -18,7 +18,7 @@ import { TokenListModal } from './components/TokenListModal'
 
 export const SwapPage: React.FC = () => {
   const { fromData, toData, updatePairInfo, switchFromAndTo } = useSwapPairInfo()
-  const { from: fromTokenPrice, to: toTokenPrice, fetchTokenPrice } = useTokenPrice()
+  const { from: fromTokenPrice, to: toTokenPrice } = useTokenPrice()
 
   const [openTokenListModal, setOpenTokenListModal] = useState<boolean>(false)
   const [selectType, setSelectType] = useState<SwapInputType | null>(null)
@@ -43,14 +43,11 @@ export const SwapPage: React.FC = () => {
         (type === 'to' && tokenInfo.address === fromData?.tokenInfo.address)
       ) {
         switchFromAndTo()
-        return
+      } else {
+        updatePairInfo(type, { tokenInfo })
       }
-      updatePairInfo(type, { tokenInfo })
-      setTimeout(() => {
-        fetchTokenPrice()
-      }, 2000)
     },
-    [updatePairInfo, fetchTokenPrice, switchFromAndTo, fromData, toData]
+    [updatePairInfo, switchFromAndTo, fromData, toData]
   )
 
   return (

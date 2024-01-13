@@ -34,8 +34,13 @@ export const useSwapPairInfo = (): {
     }
   ) => void
   switchFromAndTo: () => void
+  resetPairInfo: () => void
 } => {
   const { fromData, setFromData, toData, setToData } = useAppState()
+
+  const resetPairInfo = useCallback(() => {
+    setFromData(prev => ({ tokenInfo: prev?.tokenInfo as TokenInfo, amount: 0 }))
+  }, [setFromData])
 
   const updatePairInfo = useCallback(
     (type: SwapInputType, { tokenInfo, amount }: { tokenInfo?: TokenInfo; amount?: number }): void => {
@@ -61,7 +66,7 @@ export const useSwapPairInfo = (): {
     })
   }, [toData, fromData, setFromData, setToData])
 
-  return { fromData, toData, updatePairInfo, switchFromAndTo }
+  return { fromData, toData, updatePairInfo, switchFromAndTo, resetPairInfo }
 }
 
 export const useTokenPrice = (): {
@@ -78,7 +83,8 @@ export const useTokenPrice = (): {
 
 export const useSplTokenData = (): {
   splTokenData: SplToken[]
+  fetchSPLTokenData: () => Promise<void>
 } => {
-  const { splTokenData } = useAppState()
-  return { splTokenData }
+  const { splTokenData, fetchSPLTokenData } = useAppState()
+  return { splTokenData, fetchSPLTokenData }
 }

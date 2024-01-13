@@ -5,13 +5,13 @@ import { useWallet } from '@solana/wallet-adapter-react'
 import './styles.scss'
 
 export const ConnectWalletButton: React.FC = () => {
-  const { publicKey } = useWallet()
+  const { publicKey, connecting } = useWallet()
 
   return (
     <div>
       {!publicKey ? (
         <WalletMultiButton>
-          <span>Connect Wallet</span>
+          <span>{connecting ? 'Connecting...' : 'Connect Wallet'}</span>
         </WalletMultiButton>
       ) : (
         <div className="wallet-connected-wrapper">

@@ -1,7 +1,7 @@
 import { TokenData } from '@/types'
 import { AAT_TOKEN_MINT, BBT_TOKEN_MINT } from './programs'
 
-export const SECONDS_TO_REFRESH = 60
+export const SECONDS_TO_REFRESH = 120
 
 export const DEFAULT_FROM_DATA: TokenData = {
   tokenInfo: {
