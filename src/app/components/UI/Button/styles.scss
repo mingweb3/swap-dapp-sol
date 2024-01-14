@@ -12,13 +12,30 @@
     border-color: var(--color-text);
   }
 
-  > span {
+  .custome-button__inner {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+  }
+
+  span {
     font-size: var(--font-size-3);
     font-weight: 900;
-    line-height: var(--font-size-3);
     background: var(--color-gradient-1);
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+  }
+
+  &--disabled {
+    cursor: not-allowed;
+    span {
+      font-size: var(--font-size-3);
+      font-weight: 900;
+      background: var(--color-text);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
   }
 }

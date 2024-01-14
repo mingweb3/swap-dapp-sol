@@ -2,10 +2,11 @@ import { Box, Flex } from '@radix-ui/themes'
 import React from 'react'
 import { Link, useLocation } from 'react-router-dom'
 
-import './styles.scss'
 import { ConnectWalletButton } from '../ConnectWalletButton'
 import { PATHS } from '@/constants/paths'
 import { isPathnameMatch } from '@/utils/helper'
+
+import './styles.scss'
 
 export const Header: React.FC = () => {
   // Get Current Page for Menu

@@ -8,6 +8,7 @@ import { AirdropPage } from './pages/Airdrop/Loadable'
 
 import { PATHS } from '@/constants/paths'
 import { RootLayout } from './components/RootLayout'
+import { AppProvider } from '@/contexts/AppProvider'
 
 const router = createBrowserRouter([
   {
@@ -21,10 +22,18 @@ const router = createBrowserRouter([
       },
       {
         path: PATHS.SWAP,
-        element: <RootLayout />,
+        element: (
+          <AppProvider>
+            <RootLayout />
+          </AppProvider>
+        ),
         children: [
           {
             path: '',
+            element: <SwapPage />
+          },
+          {
+            path: '*',
             element: <SwapPage />
           }
         ]

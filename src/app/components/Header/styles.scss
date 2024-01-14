@@ -25,6 +25,10 @@
         &:hover {
           color: var(--color-white);
         }
+
+        &.active {
+          color: var(--color-white);
+        }
       }
 
       .mn-item {

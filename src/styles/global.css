@@ -12,6 +12,7 @@ body {
 body .page {
   color: var(--color-text);
 }
+
 ul {
   list-style: none;
   padding: 0;
@@ -22,6 +23,11 @@ a {
   color: var(--color-text);
   text-decoration: none;
 }
+
 a:hover {
   text-decoration: underline;
+}
+
+.Toastify__toast-container {
+  font-family: 'Nunito Sans', sans-serif;
 }

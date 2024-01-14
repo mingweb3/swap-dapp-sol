@@ -45,6 +45,10 @@
       font-size: var(--font-size-1);
       font-weight: var(--font-weight-bold);
     }
+
+    .token-item__token-addr a {
+      line-height: var(--font-size-3);
+    }
   }
 
   .token-item__price-info {
@@ -63,6 +67,9 @@
     .token-item__percent-change {
       &--up {
         color: var(--color-green);
+      }
+      &--down {
+        color: var(--color-red);
       }
     }
 

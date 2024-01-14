@@ -3,6 +3,7 @@
   --color-text: #848fab;
   --color-text-2: #3b4255;
   --color-white: #ffffff;
+  --color-red: #992500;
   --color-dark-blue: #1c2c53;
   --color-dark-blue-2: #192238;
   --color-box: #101729;
@@ -10,11 +11,18 @@
   --color-gradient-1: linear-gradient(90deg, #88b7ff 0%, #ff602e 100%);
   --color-gradient-2: linear-gradient(70deg, rgba(118, 173, 255, 0.13) 58.2%, rgba(217, 73, 81, 0.46) 85.6%);
   --color-gradient-3: linear-gradient(180deg, rgba(118, 173, 255, 0.13) 0%, rgba(217, 73, 81, 0.46) 100%);
+  --toastify-color-dark: #101729;
+  --toastify-color-success: #009166;
 }
 
 .radix-themes {
   --default-font-family: 'Nunito Sans', sans-serif;
   --default-font-size: 16px;
+}
+
+.react-loading-skeleton {
+  --base-color: var(--color-box) !important;
+  --highlight-color: var(--color-text-2) !important;
 }
 
 .pg-container {
@@ -36,7 +44,11 @@
 .text-white {
   color: var(--color-white);
 }
-h1, h2, h3, h4, h5 {
+h1,
+h2,
+h3,
+h4,
+h5 {
   margin: 0;
   margin-bottom: 24px;
 }

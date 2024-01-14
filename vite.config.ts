@@ -17,13 +17,16 @@ export default defineConfig(({ command  }) => {
           "@/components": path.resolve(__dirname, "./src/app/components"),
           "@/styles": path.resolve(__dirname, "./src/styles"),
           "@/hooks": path.resolve(__dirname, "./src/hooks"),
+          "@/contexts": path.resolve(__dirname, "./src/contexts"),
           "@/constants": path.resolve(__dirname, "./src/constants"),
-          "@/models": path.resolve(__dirname, "./src/models"),
           "@/utils": path.resolve(__dirname, "./src/utils"),
           "@/state": path.resolve(__dirname, "./src/state"),
-          "@/public/*": path.resolve(__dirname, "./public/*")
+          "@/types": path.resolve(__dirname, "./src/types"),
+          "@/models": path.resolve(__dirname, "./src/models"),
+          "@/libs": path.resolve(__dirname, "./src/libs"),
+          "@/public/*": path.resolve(__dirname, "./public/*"),
         },
-      }
+      },
     }
   } else {
   // When Build and deploy
@@ -34,10 +37,13 @@ export default defineConfig(({ command  }) => {
           "@/components": path.resolve(__dirname, "./src/app/components"),
           "@/styles": path.resolve(__dirname, "./src/styles"),
           "@/hooks": path.resolve(__dirname, "./src/hooks"),
+          "@/contexts": path.resolve(__dirname, "./src/contexts"),
           "@/constants": path.resolve(__dirname, "./src/constants"),
-          "@/models": path.resolve(__dirname, "./src/models"),
           "@/utils": path.resolve(__dirname, "./src/utils"),
           "@/state": path.resolve(__dirname, "./src/state"),
+          "@/types": path.resolve(__dirname, "./src/types"),
+          "@/models": path.resolve(__dirname, "./src/models"),
+          "@/libs/*": path.resolve(__dirname, "./src/libs"),
           "@/public/*": path.resolve(__dirname, "./public/*"),
           crypto: 'crypto-browserify',
         },
@@ -62,7 +68,7 @@ export default defineConfig(({ command  }) => {
         rollupOptions: {
           plugins: [
             rollupNodePolyFill()
-          ]
+          ],
         }
       }
     }
