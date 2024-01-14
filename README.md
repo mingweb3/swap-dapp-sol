@@ -14,6 +14,8 @@
 7. Missing in Package: Unit Jest / Auto deployment / Config Testnet, Mainnet Beta.
 8. This project is a demo i've built in 4 full working days (+1 day to test and record video. total is 5days). So there are some missing points. It can not be a final product. there are a lot functions / features in my mind that i want to build if it's real world. please focus on the demo only.
 
+👌 **View Video**: https://www.veed.io/view/c7c8af5e-9f62-45f6-a346-b2301d30da33?sharingWidget=true&panel=share
+
 [![PC](https://i.postimg.cc/T2kBTdbW/Screenshot-2024-01-11-at-15-48-15.png)](https://postimg.cc/qg31Ldjk) 
 
 [![Mobile](https://i.postimg.cc/rmG05ZSv/Screenshot-2024-01-11-at-15-48-24.png)](https://postimg.cc/ZBR5Scsc)
