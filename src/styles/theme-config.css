@@ -20,6 +20,11 @@
   --default-font-size: 16px;
 }
 
+.react-loading-skeleton {
+  --base-color: var(--color-box) !important;
+  --highlight-color: var(--color-text-2) !important;
+}
+
 .pg-container {
   width: 100%;
   max-width: 1170px;

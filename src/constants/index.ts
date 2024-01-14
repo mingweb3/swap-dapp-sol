@@ -16,7 +16,7 @@ export const DEFAULT_FROM_DATA: TokenData = {
     symbol: 'AAT',
     tags: ['test']
   },
-  amount: 0
+  amount: ''
 }
 
 export const DEFAULT_TO_DATA: TokenData = {
@@ -32,5 +32,5 @@ export const DEFAULT_TO_DATA: TokenData = {
     symbol: 'BBT',
     tags: ['test']
   },
-  amount: 0
+  amount: ''
 }

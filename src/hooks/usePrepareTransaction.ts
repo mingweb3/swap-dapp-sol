@@ -1,6 +1,5 @@
 import * as token from '@solana/spl-token'
 import { TOKEN_PROGRAM_ID } from '@solana/spl-token'
-// import { TOKEN_SWAP_PROGRAM_ID } from '@/libs/token-swap'
 import { useConnection, useWallet } from '@solana/wallet-adapter-react'
 import { useCallback } from 'react'
 import * as Web3 from '@solana/web3.js'
@@ -32,6 +31,8 @@ export const usePrepareTransaction = () => {
       const BBTTokenATA = await token.getAssociatedTokenAddress(BBT_TOKEN_MINT, publicKey)
       const tokenAccountPool = await token.getAssociatedTokenAddress(POOL_TOKEN_MINT, publicKey)
 
+      const blockhash = (await connection.getLatestBlockhash('finalized')).blockhash
+
       const transaction = new Web3.Transaction()
 
       const account = await connection.getAccountInfo(tokenAccountPool)
@@ -48,7 +49,7 @@ export const usePrepareTransaction = () => {
 
       const decimals =
         fromData.tokenInfo.address === AAT_TOKEN_MINT.toString() ? AATMintInfo.decimals : BBTMintInfo.decimals
-      const amount = (fromData.amount as number) * 10 ** decimals
+      const amount = parseFloat(fromData.amount as string) * 10 ** decimals
 
       const instruction = swapInstruction(
         TOKEN_SWAP_STATE_ACCOUNT,
@@ -66,6 +67,8 @@ export const usePrepareTransaction = () => {
         amount as unknown as bigint,
         0 as unknown as bigint
       )
+      transaction.recentBlockhash = blockhash
+      transaction.feePayer = publicKey
       transaction.add(instruction)
 
       return transaction

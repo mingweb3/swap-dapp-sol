@@ -1,5 +1,6 @@
-import React, { ChangeEvent, useCallback, useState } from 'react'
+import React, { ChangeEvent, useCallback, useEffect, useState } from 'react'
 import { Helmet } from 'react-helmet-async'
+import { useDebounce } from 'use-debounce'
 
 import { Box } from '@radix-ui/themes'
 
@@ -12,16 +13,53 @@ import { SwapPairInfo } from './components/SwapPairInfo'
 
 import './styles.scss'
 import { useSwapPairInfo, useTokenPrice } from '@/contexts/AppProvider/hooks'
-import { SwapInputType } from '@/types'
+import { SwapInputType, TokenData } from '@/types'
 import { TokenInfo } from '@solana/spl-token-registry'
 import { TokenListModal } from './components/TokenListModal'
+import { Transaction } from '@solana/web3.js'
+import { usePrepareTransaction } from '@/hooks/usePrepareTransaction'
+import { useConnection } from '@solana/wallet-adapter-react'
+import { unformatNumber } from '@/utils/unformatNumber'
+import { estimatedReceived } from '@/utils/estimatedReceived'
 
 export const SwapPage: React.FC = () => {
+  const { connection } = useConnection()
   const { fromData, toData, updatePairInfo, switchFromAndTo } = useSwapPairInfo()
   const { from: fromTokenPrice, to: toTokenPrice } = useTokenPrice()
+  const { prepareTransaction } = usePrepareTransaction()
 
   const [openTokenListModal, setOpenTokenListModal] = useState<boolean>(false)
   const [selectType, setSelectType] = useState<SwapInputType | null>(null)
+  const [transaction, setTransaction] = useState<Transaction | null>(null)
+  const [isPrepareTx, setIsPrepareTx] = useState<boolean>(false)
+  const [txFee, setTxFee] = useState<number | null>(null)
+
+  const [debounceFromDataAmount] = useDebounce(fromData?.amount, 500)
+
+  useEffect(() => {
+    if (parseFloat(debounceFromDataAmount as string) > 0) {
+      setIsPrepareTx(true)
+      prepareTransaction(fromData as TokenData).then(setTransaction)
+    } else {
+      setIsPrepareTx(false)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [fromData?.tokenInfo, debounceFromDataAmount])
+
+  useEffect(() => {
+    if (transaction) {
+      transaction
+        ?.getEstimatedFee(connection)
+        .then(setTxFee)
+        .finally(() => setIsPrepareTx(false))
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [transaction])
+
+  useEffect(() => {
+    updatePairInfo('to', { amount: estimatedReceived(fromData as TokenData, toData as TokenData) })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [fromData, toData?.tokenInfo])
 
   const toggleTokenListModal = useCallback((type: typeof selectType): void => {
     setSelectType(type)
@@ -30,8 +68,11 @@ export const SwapPage: React.FC = () => {
 
   const onAmountChange = useCallback(
     (type: SwapInputType, e: ChangeEvent<HTMLInputElement>): void => {
-      const amount = e.target.value.replace(/[^0-9.]/g, '')
-      updatePairInfo(type, { amount: +amount })
+      const amountInput = e.target.value
+      if (!/[^0-9,.]|(\.[^.]*\.)/.test(amountInput)) {
+        updatePairInfo(type, { amount: unformatNumber(amountInput) })
+        setTxFee(null)
+      }
     },
     [updatePairInfo]
   )
@@ -82,8 +123,15 @@ export const SwapPage: React.FC = () => {
                   onOpenTokenList={toggleTokenListModal}
                 />
               </div>
-              <EstimatedFee fromData={fromData} toData={toData} />
-              <SwapButton />
+              <EstimatedFee fromData={fromData} toData={toData} isPrepareTx={isPrepareTx} fee={txFee} />
+              <SwapButton
+                isPrepareTx={isPrepareTx}
+                transaction={transaction as Transaction}
+                onSwapSuccess={() => {
+                  setTxFee(null)
+                  setTransaction(null)
+                }}
+              />
             </div>
           </Box>
         </Box>

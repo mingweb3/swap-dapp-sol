@@ -1,5 +1,5 @@
 export const truncateString = (inputString: string, maxLength: number): string => {
-  if (inputString.length <= maxLength) {
+  if (inputString?.length <= maxLength) {
     return inputString
   }
 
@@ -7,7 +7,7 @@ export const truncateString = (inputString: string, maxLength: number): string =
   const rightLength = Math.floor((maxLength - 3) / 2)
 
   const truncatedString =
-    inputString.substring(0, leftLength) + '...' + inputString.substring(inputString.length - rightLength)
+    inputString?.substring(0, leftLength) + '...' + inputString?.substring(inputString?.length - rightLength)
 
   return truncatedString
 }

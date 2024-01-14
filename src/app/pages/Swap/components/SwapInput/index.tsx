@@ -21,13 +21,13 @@ export const SwapInput: React.FC<Props> = props => {
 
   const totalUsdValue = useMemo((): number => {
     if (tokenData?.amount && tokenPrice?.usd) {
-      return tokenData.amount * tokenPrice.usd
+      return parseFloat(tokenData.amount as string) * tokenPrice.usd
     }
 
     return 0
   }, [tokenData, tokenPrice])
 
-  const tokenBalance = useMemo((): number => {
+  const tokenBalance = (): number => {
     const data: SplToken | undefined = splTokenData.find(
       (t: SplToken) => t?.parsedInfo?.mint === tokenData?.tokenInfo?.address
     )
@@ -36,14 +36,14 @@ export const SwapInput: React.FC<Props> = props => {
     } else {
       return 0
     }
-  }, [tokenData, splTokenData])
+  }
 
   return (
     <>
       <div className="swap-input">
         <div className="swap-input__label">
           {type === 'from' ? (
-            <PayLabel balance={tokenBalance} symbol={tokenData?.tokenInfo?.symbol as string} />
+            <PayLabel balance={tokenBalance()} symbol={tokenData?.tokenInfo?.symbol as string} />
           ) : (
             'You receive'
           )}
@@ -52,13 +52,16 @@ export const SwapInput: React.FC<Props> = props => {
           <div className="swap-amount-ipt-wrapper">
             {type === 'from' ? (
               <input
-                value={(tokenData?.amount as number) > 0 ? `${tokenData?.amount}` : ''}
+                inputMode="decimal"
+                type="text"
+                value={parseFloat(tokenData?.amount as string) >= 0 ? formatNumber(`${tokenData?.amount}`) : ''}
                 placeholder="0.00"
-                pattern="[0-9]*"
                 onChange={onAmountChange}
               />
             ) : (
-              <span>0</span>
+              <span>
+                {parseFloat(tokenData?.amount as string) > 0 ? `~${formatNumber(`${tokenData?.amount}`)}` : 0}
+              </span>
             )}
             <div className="swap-input__total-usd">{`${
               totalUsdValue > 0 ? `$${formatNumber(`${totalUsdValue}`)}` : '--'

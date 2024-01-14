@@ -30,7 +30,7 @@ export const useSwapPairInfo = (): {
       amount
     }: {
       tokenInfo?: TokenInfo | undefined
-      amount?: number | undefined
+      amount?: string | undefined
     }
   ) => void
   switchFromAndTo: () => void
@@ -39,16 +39,17 @@ export const useSwapPairInfo = (): {
   const { fromData, setFromData, toData, setToData } = useAppState()
 
   const resetPairInfo = useCallback(() => {
-    setFromData(prev => ({ tokenInfo: prev?.tokenInfo as TokenInfo, amount: 0 }))
-  }, [setFromData])
+    setFromData(prev => ({ tokenInfo: prev?.tokenInfo as TokenInfo, amount: '' }))
+    setToData(prev => ({ tokenInfo: prev?.tokenInfo as TokenInfo, amount: '' }))
+  }, [setFromData, setToData])
 
   const updatePairInfo = useCallback(
-    (type: SwapInputType, { tokenInfo, amount }: { tokenInfo?: TokenInfo; amount?: number }): void => {
+    (type: SwapInputType, { tokenInfo, amount }: { tokenInfo?: TokenInfo; amount?: string }): void => {
       const set = type === 'from' ? setFromData : setToData
       const data = type === 'from' ? fromData : toData
       const newData = {
         tokenInfo: (typeof tokenInfo !== 'undefined' ? tokenInfo : data?.tokenInfo) as TokenInfo,
-        amount: (typeof amount !== 'undefined' ? amount : data?.amount) as number
+        amount: (typeof amount !== 'undefined' ? amount : data?.amount) as string
       }
       set(newData)
     },
@@ -58,11 +59,11 @@ export const useSwapPairInfo = (): {
   const switchFromAndTo = useCallback(() => {
     setFromData({
       tokenInfo: toData?.tokenInfo as TokenInfo,
-      amount: fromData?.amount as number
+      amount: fromData?.amount as string
     })
     setToData({
       tokenInfo: fromData?.tokenInfo as TokenInfo,
-      amount: toData?.amount as number
+      amount: toData?.amount as string
     })
   }, [toData, fromData, setFromData, setToData])
 

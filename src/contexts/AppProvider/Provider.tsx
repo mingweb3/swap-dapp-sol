@@ -66,7 +66,7 @@ const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
     }
     _fetchTokenPrice()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [fromData, toData])
+  }, [fromData?.tokenInfo, toData?.tokenInfo])
 
   useEffect((): void => {
     if (tokenList?.length) {
@@ -77,13 +77,13 @@ const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
         tokenInfo: tokenPair?.[0]
           ? tokenList?.find(t => t.symbol === tokenPair[0]) || DEFAULT_FROM_DATA.tokenInfo
           : DEFAULT_FROM_DATA.tokenInfo,
-        amount: 0
+        amount: ''
       })
       setToData({
         tokenInfo: tokenPair?.[1]
           ? tokenList?.find(t => t.symbol === tokenPair[1]) || DEFAULT_TO_DATA.tokenInfo
           : DEFAULT_TO_DATA.tokenInfo,
-        amount: 0
+        amount: ''
       })
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

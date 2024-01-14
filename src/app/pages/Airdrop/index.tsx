@@ -12,7 +12,7 @@ import { useTokenWallet } from '@/hooks/useTokenWallet'
 
 export const AirdropPage: React.FC = () => {
   const { publicKey } = useWallet()
-  const { tokenWallet, getTokenBalanceUI } = useTokenWallet()
+  const { getTokenBalanceUI } = useTokenWallet()
 
   useEffect(() => {
     if (publicKey) {
@@ -20,12 +20,6 @@ export const AirdropPage: React.FC = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [publicKey])
-
-  useEffect(() => {
-    if (tokenWallet) {
-      console.log(tokenWallet)
-    }
-  }, [tokenWallet])
 
   return (
     <>

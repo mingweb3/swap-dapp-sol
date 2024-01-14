@@ -14,6 +14,7 @@ import '@radix-ui/themes/styles.css'
 import 'react-toastify/dist/ReactToastify.css'
 import './styles/global.css'
 import './styles/theme-config.css'
+import 'react-loading-skeleton/dist/skeleton.css'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>

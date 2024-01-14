@@ -1,7 +1,7 @@
 import { TokenInfo } from '@solana/spl-token-registry'
 
 export interface TokenData {
-  amount: number | null
+  amount: string | null
   tokenInfo: TokenInfo
 }
 
