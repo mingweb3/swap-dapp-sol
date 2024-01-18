@@ -18,11 +18,12 @@ import { TokenInfo } from '@solana/spl-token-registry'
 import { TokenListModal } from './components/TokenListModal'
 import { Transaction } from '@solana/web3.js'
 import { usePrepareTransaction } from '@/hooks/usePrepareTransaction'
-import { useConnection } from '@solana/wallet-adapter-react'
+import { useConnection, useWallet } from '@solana/wallet-adapter-react'
 import { unformatNumber } from '@/utils/unformatNumber'
 import { estimatedReceived } from '@/utils/estimatedReceived'
 
 export const SwapPage: React.FC = () => {
+  const wallet = useWallet()
   const { connection } = useConnection()
   const { fromData, toData, updatePairInfo, switchFromAndTo } = useSwapPairInfo()
   const { from: fromTokenPrice, to: toTokenPrice } = useTokenPrice()
@@ -37,14 +38,14 @@ export const SwapPage: React.FC = () => {
   const [debounceFromDataAmount] = useDebounce(fromData?.amount, 500)
 
   useEffect(() => {
-    if (parseFloat(debounceFromDataAmount as string) > 0) {
+    if (parseFloat(debounceFromDataAmount as string) > 0 && wallet.connected) {
       setIsPrepareTx(true)
       prepareTransaction(fromData as TokenData).then(setTransaction)
     } else {
       setIsPrepareTx(false)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [fromData?.tokenInfo, debounceFromDataAmount])
+  }, [fromData?.tokenInfo, debounceFromDataAmount, wallet.connected])
 
   useEffect(() => {
     if (transaction) {
@@ -57,9 +58,11 @@ export const SwapPage: React.FC = () => {
   }, [transaction])
 
   useEffect(() => {
-    updatePairInfo('to', { amount: estimatedReceived(fromData as TokenData, toData as TokenData) })
+    if (wallet.connected) {
+      updatePairInfo('to', { amount: estimatedReceived(fromData as TokenData, toData as TokenData) })
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [fromData, toData?.tokenInfo])
+  }, [fromData, toData?.tokenInfo, wallet.connected])
 
   const toggleTokenListModal = useCallback((type: typeof selectType): void => {
     setSelectType(type)

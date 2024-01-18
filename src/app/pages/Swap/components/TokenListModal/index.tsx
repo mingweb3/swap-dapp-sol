@@ -59,7 +59,7 @@ export const TokenListModal: React.FC<Props> = props => {
           <input type="text" ref={searchRef} placeholder="Search by token or address" onChange={onSearchToken} />
         </div>
         <div className="token-list__featured-tokens">
-          {tokenList.slice(0, 8)?.map((token: TokenInfo) => (
+          {tokenList.slice(0, 7)?.map((token: TokenInfo) => (
             <div key={token.address} className="featured-tokens__item" onClick={() => onSelectToken(token)}>
               <Avatar src={token.logoURI} alt={token.symbol} className="featured-tokens__token-logo" />
               <span className="featured-tokens__token-name">{token.symbol}</span>
